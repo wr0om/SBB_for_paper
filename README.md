@@ -5,8 +5,6 @@ This repository is heavily based on the paper "Refusal in Language Models Is Med
 ## Setup
 
 ```bash
-git clone https://github.com/andyrdt/refusal_direction.git
-cd refusal_direction
 source setup.sh
 ```
 
