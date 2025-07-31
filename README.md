@@ -1,3 +1,45 @@
+# Silenced Bias Benchmark (SBB)
+
+This repository is heavily based on the paper "Refusal in Language Models Is Mediated by a Single Direction", and its corresponding repository [refusal_direction](https://github.com/andyrdt/refusal_direction).
+
+## Setup
+
+```bash
+git clone https://github.com/andyrdt/refusal_direction.git
+cd refusal_direction
+source setup.sh
+```
+
+
+The setup script will prompt you for a HuggingFace token (required to access gated models) and a Together AI token (required to access the Together AI API, which is used for evaluating jailbreak safety scores).
+It will then set up a virtual environment and install the required packages.
+
+## Reproducing main results
+
+To reproduce the main results from the paper, run the following command inside the `pipeline` directory:
+
+```bash
+python bias_multi_direction.py --model_path {model}
+```
+
+where `{model}` is the path to a HuggingFace model. For example, for Llama-3.1 8B Instruct, the model path would be `meta-llama/Llama-3.1-8B-Instruct`.
+The pipeline performs the following steps:
+1. Loads the SBB dataset from `bias_data_path` (default: `../dataset/quiz_bias`).
+2. Extracts refusal direction, as done in the original work.
+3. Utilizes this direction in two methods: direction ablation and direction subtraction (termed actadd) in order to steer completions toward complying.
+4. Generates completions over the SBB dataset.
+5. Repeats the above steps for multiple directions, as specified by `direction_num` (default: 10), with it being used as a seed for random sampling of prompts to generate directions from.
+
+
+## Results
+The results will be saved in the `results_multi` directory, with a directory for each model.
+In order to evaluate the results, you can use the `bias_multi_direction_results.ipynb` notebook, which will load the results for a specific model and plot them.
+
+
+
+
+<!-- 
+
 # Refusal in Language Models Is Mediated by a Single Direction
 
 **Content warning**: This repository contains text that is offensive, harmful, or otherwise inappropriate in nature.
@@ -74,4 +116,4 @@ If you find this work useful in your research, please consider citing our [paper
   journal={arXiv preprint arXiv:2406.11717},
   year={2024}
 }
-```
+``` -->
